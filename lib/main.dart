@@ -368,20 +368,7 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
           ),
         ),
         onDismissed: (direction) {
-          final title = todo.title;
-          final description = todo.description;
           _deleteTodo(todo.id);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('"$title" deleted'),
-              action: SnackBarAction(
-                label: 'Undo',
-                onPressed: () {
-                  _addTodo(title, description);
-                },
-              ),
-            ),
-          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -482,79 +469,50 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
   }
 
   Widget _buildBottomAppBar() {
-    return BottomAppBar(
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8.0,
-      elevation: 8,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.menu, color: Colors.black87),
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return SafeArea(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                              leading: const Icon(Icons.info_outline),
-                              title: const Text('About Todo App'),
-                              onTap: () {
-                                Navigator.pop(context);
-                                showAboutDialog(
-                                  context: context,
-                                  applicationName: 'Todo App',
-                                  applicationVersion: '1.0.0',
-                                  applicationIcon: const Icon(
-                                    Icons.check_circle,
-                                    color: Colors.blue,
-                                    size: 40,
-                                  ),
-                                  children: const [
-                                    Text(
-                                      'A simple, beautiful Todo app built with Flutter.',
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-              const Text(
-                'Todo',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: Colors.grey)),
+      ),
+      child: BottomAppBar(
+        color: Colors.white,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        elevation: 8,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.blue),
+                  onPressed: () {},
                 ),
-              ),
-            ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.blue, size: 28),
-            onPressed: () {
-              setState(() {
-                _isSearchMode = !_isSearchMode;
-              });
-              if (_isSearchMode) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _searchFocusNode.requestFocus();
+                const Text(
+                  'Todo',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
+            IconButton(
+              icon: const Icon(Icons.search, color: Colors.blue, size: 28),
+              onPressed: () {
+                setState(() {
+                  _isSearchMode = !_isSearchMode;
                 });
-              }
-            },
-          ),
-        ],
+                if (_isSearchMode) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _searchFocusNode.requestFocus();
+                  });
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

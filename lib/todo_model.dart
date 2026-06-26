@@ -32,14 +32,14 @@ class Todo {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'title': title,
+      'title': title, 
       'description': description,
       'isCompleted': isCompleted ? 1 : 0,
       'createdAt': createdAt.toIso8601String(),
     };
   }
 
-  factory Todo.fromMap(Map<String, dynamic> map) {
+  factory Todo.fromMap(Map<String, dynamic> map) {  
     return Todo(
       id: map['id'] as String,
       title: map['title'] as String,
